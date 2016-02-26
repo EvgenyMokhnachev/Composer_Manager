@@ -1,5 +1,9 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    form(method='POST', action='audio/upload', enctype="multipart/form-data")
+      input(type='file' name='audioFile')
+      input(type='submit')
