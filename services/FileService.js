@@ -6,15 +6,15 @@ var UploadedFile = require('../entity/UploadedFile');
 var fileExtension = require('file-extension');
 var path = require('path');
 
-function UploadFileService(){
+function FileService(){
     this.uploadsPath = '../uploads/';
 }
 
-UploadFileService.prototype.getFileExtension = function(fileName){
+FileService.prototype.getFileExtension = function(fileName){
     return fileExtension(fileName);
 };
 
-UploadFileService.prototype.uploadMultipart = function(multipartFile, success, error){
+FileService.prototype.uploadMultipart = function(multipartFile, success, error){
     var self = this;
 
     fs.readFile(multipartFile.path, function (err, data) {
@@ -51,16 +51,10 @@ UploadFileService.prototype.uploadMultipart = function(multipartFile, success, e
 
                 if(success){
                     success(uploadedFile);
-
-                    UploadedFile.find().exec(function(error, data){
-                        data.forEach(function(item){
-                            console.log(item._id)
-                        });
-                    });
                 }
             });
         });
     });
 };
 
-module.exports = new UploadFileService();
+module.exports = new FileService();

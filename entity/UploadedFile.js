@@ -1,27 +1,19 @@
 'use strict';
 
-//function UploadedFile(path, fullPath, name, extension, size, type){
-//    this.id = undefined;
-//    this.path = path;
-//    this.fullPath = fullPath;
-//    this.name = name;
-//    this.extension = extension;
-//    this.size = size;
-//    this.type = type;
-//}
-//
-//module.exports = UploadedFile;
-
 var mongoose = require('mongoose');
+var utcNow = require('utc-now');
 
-var UploadedFile = mongoose.model('UploadedFile', {
-    //id: mongoose.Schema.Types.ObjectId,
+var UploadedFile = new mongoose.Schema({
     path: String,
     fullPath: String,
     name: String,
     extension: String,
     size: Number,
-    type: String
+    type: String,
+    date: {
+        type: Date,
+        default: utcNow()
+    }
 });
 
-module.exports = UploadedFile;
+module.exports = mongoose.model('UploadedFile', UploadedFile);

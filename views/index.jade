@@ -7,3 +7,33 @@ html
     form(method='POST', action='audio/upload', enctype="multipart/form-data")
       input(type='file' name='audioFile')
       input(type='submit')
+
+    div(data-result=result, id='dataDiv')
+      script.
+        var dataDiv = document.getElementById('dataDiv');
+        var data = dataDiv.getAttribute('data-result');
+        var parserData = JSON.parse(data);
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 1000;
+        canvas.height = 300;
+        document.body.appendChild(canvas);
+        var ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#000000';
+        ctx.moveTo(0, canvas.height);
+
+        parserData.peaks.forEach(function(peack, index){
+          ctx.lineTo(canvas.width/parserData.peaks.length * index, canvas.height);
+          ctx.lineTo(canvas.width/parserData.peaks.length * index, canvas.height - peack*300);
+          ctx.lineTo(canvas.width/parserData.peaks.length * index, canvas.height);
+        });
+
+        console.log(parserData.peaks.length);
+
+        ctx.stroke();
+
+
+
+
